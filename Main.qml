@@ -161,8 +161,9 @@ Window {
                         }
                         Rectangle {
                             id: separation
-                            width: parent.width
-                            height: 1
+                            width: parent.width + 2*8
+                            anchors.left: parent.left; anchors.leftMargin: -8
+                            height: 8
                             color: "#2e2e2e"
                         }
                         Row {
@@ -245,12 +246,16 @@ Window {
                         ScrollView {
                             id: view
                             width: parent.width
-                            height: parent.height - nodesList.implicitHeight - separation.height - search.height
+                            height: parent.height - nodesList.height - separation.height - search.height
 
-                            Text {
+                            TextArea {
                                 id: nodeDetails
                                 anchors.fill: parent
                                 anchors.margins: 8
+                                color: "black"
+                                onPressed: (event) => {
+                                    outputArea.text = "X: " + Math.floor(event.x) + " Y: " + Math.floor(event.y)
+                                }
                             }
                         }
                     }
