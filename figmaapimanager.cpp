@@ -14,6 +14,18 @@ void FigmaAPIManager::fetchFigmaFile(const QString &fileKey, const QString &acce
     request.setRawHeader("X-Figma-Token", accessToken.toUtf8());
 
     networkManager->get(request);
+    m_settings.setValue("fileKey", fileKey);
+    m_settings.setValue("accessToken", accessToken);
+}
+
+QString FigmaAPIManager::getLastFileKey() const
+{
+    return m_settings.value("fileKey").toString();
+}
+
+QString FigmaAPIManager::getLastAccessToken() const
+{
+    return m_settings.value("accessToken").toString();
 }
 
 void FigmaAPIManager::onResult(QNetworkReply *reply) {

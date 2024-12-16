@@ -15,7 +15,7 @@ public:
     explicit FigmaDocument(QObject *parent = nullptr);
 
     Q_INVOKABLE void fill(const QString& txt);
-    Q_INVOKABLE QStringList getNodesList() const;
+    Q_INVOKABLE QStringList getNodesList(int index = 0) const;
     Q_INVOKABLE QString getNodeContent(const QString& key) const;
 
 private:

@@ -1,3 +1,5 @@
+pragma ComponentBehavior: Bound
+
 import QtQuick
 import QtQuick.Controls
 
@@ -46,8 +48,8 @@ Window {
             Row {
                 id: info
                 width: parent.width
-                height: 30
-                spacing: 20
+                height: 32
+                spacing: 24
 
                 Rectangle {
                     color: "#f1f2fc"
@@ -73,6 +75,7 @@ Window {
                             color: "black"
                             font.pixelSize: 8
                             verticalAlignment: Text.AlignVCenter
+                            text: figmaAPIManager.getLastFileKey()
                         }
                     }
                 }
@@ -100,6 +103,7 @@ Window {
                             color: "black"
                             font.pixelSize: 8
                             verticalAlignment: Text.AlignVCenter
+                            text: figmaAPIManager.getLastAccessToken()
                         }
                     }
                 }
@@ -117,11 +121,14 @@ Window {
 
                     Column {
                         anchors.fill: parent
+                        anchors.margins: 8
                         spacing: 8
 
                         ListView {
                             id: nodesList
+
                             property int itemHeight: 24
+
                             width: parent.width
                             height: count * itemHeight
                             delegate: Rectangle {
@@ -139,13 +146,13 @@ Window {
                                     anchors.fill: parent
                                     anchors.leftMargin: 8
                                     verticalAlignment: Text.AlignVCenter
-                                    text: modelData
+                                    text: del.modelData
                                     font.pixelSize: height*3/4
                                     color: del.selected ? "white" : "#2e2e2e"
                                     MouseArea {
                                         anchors.fill: parent
                                         onClicked: {
-                                            nodesList.currentIndex = index;
+                                            nodesList.currentIndex = del.index;
                                             nodeDetails.text = figmaDocument?.getNodeContent(modelData);
                                         }
                                     }
@@ -158,20 +165,81 @@ Window {
                             height: 1
                             color: "#2e2e2e"
                         }
-                        Rectangle {
-                            id: search
-                            width: parent.width*3/4
-                            height: 24
-                            anchors.horizontalCenter: parent.horizontalCenter
-                            radius: 5
-                            color: "white"
-                            border.width: 1; border.color: "#2e2e2e"
+                        Row {
+                            id: tools
 
-                            Text  {
-                                text: "search..."
-                                anchors.fill: parent
-                                anchors.leftMargin: 8
-                                verticalAlignment: Text.AlignVCenter
+                            width: parent.width
+                            height: 24
+
+                            Rectangle {
+                                id: search
+                                width: parent.width/2
+                                height: parent.height
+                                radius: 5
+                                color: "white"
+                                border.width: 1; border.color: "#2e2e2e"
+
+                                Text  {
+                                    text: "search..."
+                                    anchors.fill: parent
+                                    anchors.leftMargin: 8
+                                    verticalAlignment: Text.AlignVCenter
+                                }
+                            }
+                            Row {
+                                width: parent.width/2
+                                height: parent.height
+
+                                Item {
+                                    height: parent.height
+                                    width: parent.width/2
+
+                                    Rectangle {
+                                        height: parent.height
+                                        width: height
+                                        radius: height/2
+                                        color: "white"
+                                        anchors.centerIn: parent
+
+                                        Text {
+                                            anchors.fill: parent
+                                            text: "+"
+                                            horizontalAlignment: Text.AlignHCenter
+                                            verticalAlignment: Text.AlignVCenter
+                                            font.pixelSize: height
+
+                                            MouseArea {
+                                                anchors.fill: parent
+                                                onClicked: nodeDetails.font.pixelSize++;
+                                            }
+                                        }
+                                    }
+                                }
+                                Item {
+                                    height: parent.height
+                                    width: parent.width/2
+
+                                    Rectangle {
+                                        height: parent.height
+                                        width: height
+                                        radius: height/2
+                                        color: "white"
+                                        anchors.centerIn: parent
+
+                                        Text {
+                                            anchors.fill: parent
+                                            text: "-"
+                                            horizontalAlignment: Text.AlignHCenter
+                                            verticalAlignment: Text.AlignVCenter
+                                            font.pixelSize: height
+
+                                            MouseArea {
+                                                anchors.fill: parent
+                                                onClicked: nodeDetails.font.pixelSize--;
+                                            }
+                                        }
+                                    }
+                                }
                             }
                         }
                         ScrollView {

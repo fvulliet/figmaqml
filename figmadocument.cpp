@@ -26,7 +26,7 @@ void FigmaDocument::fill(const QString &txt)
     }
 }
 
-QStringList FigmaDocument::getNodesList() const
+QStringList FigmaDocument::getNodesList(int index) const
 {
     QStringList list;
     for (const FigmaNode* node : m_nodes) {

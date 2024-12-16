@@ -2,7 +2,7 @@
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 
- #include "figmaapimanager.hpp"
+#include "figmaapimanager.hpp"
 
 int main(int argc, char *argv[])
 {
@@ -17,6 +17,10 @@ int main(int argc, char *argv[])
         []() { QCoreApplication::exit(-1); },
         Qt::QueuedConnection);
     engine.loadFromModule("figmaqml", "Main");
+
+    QCoreApplication::setOrganizationName("reMarkable");
+    QCoreApplication::setOrganizationDomain("remarkable.com");
+    QCoreApplication::setApplicationName("figmaqml");
 
     return app.exec();
 }
